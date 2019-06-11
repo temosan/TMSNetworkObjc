@@ -25,11 +25,11 @@ enum ScreenType {
 class Screen {
     
     class var bounds: CGRect { get { return UIScreen.main.bounds } }
-
+    
     private static var _type: ScreenType?
     class var type: ScreenType  {
         get {
-            guard _type != nil else { return .notfound }
+            guard _type == nil else { return self._type! }
             
             var screenSize = UIScreen.main.bounds.size
             if (screenSize.width > screenSize.height) {
@@ -58,9 +58,9 @@ class Screen {
             default: type = .sc_05_5
             }
             
+            self._type = type
+            
             return type
         }
-        
-        set { self._type = newValue }
     }
 }
