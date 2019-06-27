@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum ScreenType {
+public enum ScreenType {
     case notfound   //
     case sc_04_0    // iPhone SE
     case sc_04_7    // iPhone 8
@@ -22,7 +22,7 @@ enum ScreenType {
     case sc_12_9    // iPad Pro 12.9
 }
 
-class Screen {
+public class TMSScreen {
     
     class var bounds: CGRect { get { return UIScreen.main.bounds } }
     
