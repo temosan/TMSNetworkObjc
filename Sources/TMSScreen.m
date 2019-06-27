@@ -45,4 +45,17 @@
     return type;
 }
 
++ (BOOL)isNotiScreen {
+    
+    ScreenType type = [[self class] type];
+    switch (type) {
+        case ScreenType_05_8:
+        case ScreenType_06_1:
+            return YES;
+            
+        default:
+            return NO;
+    }
+}
+
 @end

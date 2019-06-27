@@ -26,5 +26,6 @@ typedef enum {
 
 + (CGRect)bounds;
 + (ScreenType)type;
++ (BOOL)isNotiScreen;
 
 @end
