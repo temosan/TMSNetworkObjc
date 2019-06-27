@@ -27,7 +27,7 @@ public class TMSScreen {
     class var bounds: CGRect { get { return UIScreen.main.bounds } }
     
     private static var _type: ScreenType?
-    class var type: ScreenType  {
+    public class var type: ScreenType  {
         get {
             guard _type == nil else { return self._type! }
             
