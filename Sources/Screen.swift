@@ -24,7 +24,7 @@ public enum ScreenType {
 
 public class TMSScreen {
     
-    class var bounds: CGRect { get { return UIScreen.main.bounds } }
+    public class var bounds: CGRect { get { return UIScreen.main.bounds } }
     
     private static var _type: ScreenType?
     public class var type: ScreenType  {
