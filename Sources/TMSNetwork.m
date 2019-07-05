@@ -93,7 +93,7 @@
     }
     
     ////////////////////////////////////////////////////////////////////////////
-    NSDate *time = [[NSDate new] autorelease];
+    NSDate *time = [NSDate new];
     
     void (^requestBlock)(NSData*, NSURLResponse*, NSError*) = nil;
     requestBlock = ^(NSData *data, NSURLResponse *response, NSError *error) {
