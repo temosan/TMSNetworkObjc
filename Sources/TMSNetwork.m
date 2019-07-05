@@ -99,7 +99,6 @@
     requestBlock = ^(NSData *data, NSURLResponse *response, NSError *error) {
         
         double now = -floor([time timeIntervalSinceDate:[NSDate date]] * 1000) / 100; now = now;
-        log_System(@"URL: %@\nElapsed Time: %f", url, now);
         
         typedef NS_ENUM(NSInteger, COMPLET_TYPE) {
             COMPLET_TYPE_SUCCESS,
