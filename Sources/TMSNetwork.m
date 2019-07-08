@@ -72,10 +72,17 @@
 + (NSURLSessionDataTask*)dataProcessorRequest:(NSMutableURLRequest*)request
                               CompletionBlock:(NetworkCompletionHandler)completionBlock {
     
-    NSMutableString *logString = [NSMutableString stringWithFormat:@"REQUEST TYPE: \t%@", request.HTTPMethod];
-    [logString appendString:[NSString stringWithFormat:@"\nREQUEST URL: \t%@", request.URL]];
+    NSMutableString *logString = [NSMutableString
+                                  stringWithFormat:@"REQUEST TYPE: \t%@",
+                                  request.HTTPMethod];
+    [logString appendString:[NSString
+                             stringWithFormat:@"\nREQUEST URL: \t%@",
+                             request.URL]];
     if (!LOG_HIDE_HEADER) {
-        [logString appendString:[NSString stringWithFormat:@"\nHEADERS: \t%@", request.allHTTPHeaderFields]];
+        [logString
+         appendString:[NSString
+                       stringWithFormat:@"\nHEADERS: \t%@",
+                       request.allHTTPHeaderFields]];
     }
     
     if ([request.HTTPMethod isEqualToString:@"POST"]) {
@@ -84,7 +91,10 @@
                                     JSONObjectWithData:request.HTTPBody
                                     options:0
                                     error:nil];
-        [logString appendString: [NSString stringWithFormat:@"\nREQUEST DATA: \t%@", parameters]];
+        [logString
+         appendString: [NSString
+                        stringWithFormat:@"\nREQUEST DATA: \t%@",
+                        parameters]];
     }
     
     NSString *url = [NSString stringWithFormat:@"%@", request.URL];
@@ -97,8 +107,6 @@
     
     void (^requestBlock)(NSData*, NSURLResponse*, NSError*) = nil;
     requestBlock = ^(NSData *data, NSURLResponse *response, NSError *error) {
-        
-        double now = -floor([time timeIntervalSinceDate:[NSDate date]] * 1000) / 100; now = now;
         
         typedef NS_ENUM(NSInteger, COMPLET_TYPE) {
             COMPLET_TYPE_SUCCESS,
@@ -143,16 +151,26 @@
             case COMPLET_TYPE_SUCCESS: {
                 
                 NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-                NSMutableString *logString = [NSMutableString
-                                              stringWithFormat:@"Response Code: \t@%ld\n",
-                                              (long)httpResponse.statusCode];
-                [logString appendString:[NSString stringWithFormat:@"Response URL: \t%@\n", response.URL.absoluteString]];
+                NSMutableString *logString =
+                [NSMutableString
+                 stringWithFormat:@"Response Code: \t@%ld\n",
+                 (long)httpResponse.statusCode];
+                [logString
+                 appendString:[NSString
+                               stringWithFormat:@"Response URL: \t%@\n",
+                               response.URL.absoluteString]];
                 if (!LOG_HIDE_HEADER) {
-                    [logString appendString:[NSString stringWithFormat:@"\nHEADERS: \t%@", httpResponse.allHeaderFields]];
+                    [logString
+                     appendString:[NSString
+                                   stringWithFormat:@"\nHEADERS: \t%@",
+                                   httpResponse.allHeaderFields]];
                 }
                 
                 if (dic) {
-                    [logString appendString: [NSString stringWithFormat:@"\nResponse DATA: \t%@", dic]];
+                    [logString
+                     appendString: [NSString
+                                    stringWithFormat:@"\nResponse DATA: \t%@",
+                                    dic]];
                 }
                 
                 log_Network_Response(@"%@", logString);
@@ -166,13 +184,17 @@
     };
     
     // Background Request
+    void(^expirationHandler)() = ^() {
+        [[UIApplication sharedApplication]
+         endBackgroundTask:[[self class] getBackgroundID]];
+        backgroundID = UIBackgroundTaskInvalid;
+    };
+    
     __block UIBackgroundTaskIdentifier backgroundID;
     backgroundID = [[UIApplication sharedApplication]
-                    beginBackgroundTaskWithExpirationHandler:^{
-                        [[UIApplication sharedApplication] endBackgroundTask:[[self class] getBackgroundID]];
-                        backgroundID = UIBackgroundTaskInvalid;
-                    }];
+                    beginBackgroundTaskWithExpirationHandler:expirationHandler];
     [[self class] setBackgroundID:backgroundID];
+    
     
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *dataTask = [session

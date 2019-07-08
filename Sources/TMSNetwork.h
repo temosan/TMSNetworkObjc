@@ -8,17 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+// Can be off the Network Log
 #define NetworkLogRequest
 #define NetworkLogResponse
 
-// Network_Request Log
 #ifdef NetworkLogRequest
 #define log_Network_Request(fmt, ...) NSLog(@"Network Request\t\n%@%@", [NSString stringWithFormat:(fmt), ##__VA_ARGS__], @"\n------------------------------");
 #else
 #define log_Network_Request(fmt, ...)
 #endif
 
-// Network_Request Log
 #ifdef NetworkLogResponse
 #define log_Network_Response(fmt, ...) NSLog(@"Network Response\t\n%@%@", [NSString stringWithFormat:(fmt), ##__VA_ARGS__], @"\n------------------------------");
 #else
