@@ -184,13 +184,14 @@
     };
     
     // Background Request
+    __block UIBackgroundTaskIdentifier backgroundID;
+
     void(^expirationHandler)() = ^() {
         [[UIApplication sharedApplication]
          endBackgroundTask:[[self class] getBackgroundID]];
         backgroundID = UIBackgroundTaskInvalid;
     };
     
-    __block UIBackgroundTaskIdentifier backgroundID;
     backgroundID = [[UIApplication sharedApplication]
                     beginBackgroundTaskWithExpirationHandler:expirationHandler];
     [[self class] setBackgroundID:backgroundID];
