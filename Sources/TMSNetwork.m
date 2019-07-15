@@ -184,7 +184,7 @@
     // Background Request
     __block UIBackgroundTaskIdentifier backgroundID;
 
-    void(^expirationHandler)() = ^() {
+    void(^expirationHandler)(void) = ^() {
         [[UIApplication sharedApplication]
          endBackgroundTask:[[self class] getBackgroundID]];
         backgroundID = UIBackgroundTaskInvalid;
